@@ -3,18 +3,17 @@ package com.yourname.learningspringboot.dao;
 import com.yourname.learningspringboot.model.User;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface UserDao {
 
-  List<User> selectAllUsers();
+    List<User> getAllUsers();
 
-  Optional<User> selectUserByUserUid(UUID userUid);
+    User getUser(UUID userUid);
 
-  int updateUser(User user);
+    int updateUser(User user);
 
-  int deleteUserByUserUid(UUID userUid);
+    int removeUser(UUID userUid);
 
-  int insertUser(UUID userUid, User user);
+    int insertUser(UUID userUid, User user);
 }

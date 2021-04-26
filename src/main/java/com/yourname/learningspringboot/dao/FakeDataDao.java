@@ -1,54 +1,47 @@
 package com.yourname.learningspringboot.dao;
 
 import com.yourname.learningspringboot.model.User;
-import com.yourname.learningspringboot.model.User.Gender;
 
-import org.springframework.stereotype.Repository;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import static com.yourname.learningspringboot.model.User.*;
 
-@Repository
 public class FakeDataDao implements UserDao {
 
-  private Map<UUID, User> database;
+    private static Map<UUID, User> database;
 
-  public FakeDataDao() {
-    database = new HashMap<>();
-    UUID joeUserUid = UUID.randomUUID();
-    database.put(joeUserUid, new User(joeUserUid, "Joe", "Jones",
-        Gender.MALE, 22, "joe.jones@gmail.com"));
-  }
+    static {
+        database = new HashMap<>();
+        UUID joeUserUid = UUID.randomUUID();
+        database.put(joeUserUid, new User(joeUserUid, "Joe", "Jones",
+                Gender.MALE, 22, "joe.jones@gmail.com"));
+    }
 
-  @Override
-  public List<User> selectAllUsers() {
-    return new ArrayList<>(database.values());
-  }
+    @Override
+    public List<User> getAllUsers() {
+        return new ArrayList<>(database.values());
+    }
 
-  @Override
-  public Optional<User> selectUserByUserUid(UUID userUid) {
-    return Optional.ofNullable(database.get(userUid));
-  }
+    @Override
+    public User getUser(UUID userUid) {
+        return database.get(userUid);
+    }
 
-  @Override
-  public int updateUser(User user) {
-    database.put(user.getUserUid(), user);
+    @Override
+    public int updateUser(User user) {
+        database.put(user.getUserUid(), user);
+        return 1;
+    }
+
+    @Override
+    public int removeUser(UUID userUid) {
+        database.remove(userUid);
+        return 1;
+    }
+
+    @Override
+    public int insertUser(UUID userUid, User user) {
+        database.put(userUid, user);
     return 1;
-  }
-
-  @Override
-  public int deleteUserByUserUid(UUID userUid) {
-    database.remove(userUid);
-    return 1;
-  }
-
-  @Override
-  public int insertUser(UUID userUid, User user) {
-    database.put(userUid, user);
-    return 1;
-  }
+    }
 }

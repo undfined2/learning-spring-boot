@@ -1,110 +1,64 @@
 package com.yourname.learningspringboot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import org.hibernate.validator.constraints.Email;
-
-import java.time.LocalDate;
 import java.util.UUID;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
-  // user id
-  private final UUID userUid;
+    private final UUID userUid;
+    private final String firstName;
+    private final String lastName;
+    private final Gender gender;
+    private final Integer age;
+    private final String email;
 
-  @NotNull
-  private final String firstName;
+    public UUID getUserUid() {
+        return userUid;
+    }
 
-  @NotNull
-  private final String lastName;
+    public String getFirstName() {
+        return firstName;
+    }
 
-  @NotNull
-  private final Gender gender;
+    public String getLastName() {
+        return lastName;
+    }
 
-  @NotNull
-  @Max(value = 112)
-  @Min(value = 0)
-  private final Integer age;
+    public Gender getGender() {
+        return gender;
+    }
 
-  @NotNull
-  @Email
-  private final String email;
+    public Integer getAge() {
+        return age;
+    }
 
-  public User(
-      @JsonProperty("userUid") UUID userUid,
-      @JsonProperty("firstName") String firstName,
-      @JsonProperty("lastName") String lastName,
-      @JsonProperty("gender") Gender gender,
-      @JsonProperty("age") Integer age,
-      @JsonProperty("email") String email) {
-    this.userUid = userUid;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.gender = gender;
-    this.age = age;
-    this.email = email;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  //  @JsonProperty("id")
-  public UUID getUserUid() {
-    return userUid;
-  }
+    public User(UUID userUid, String firstName, String lastName, Gender gender, Integer age, String email) {
+        this.userUid = userUid;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.age = age;
+        this.email = email;
+    }
 
-  //  @JsonIgnore
-  public String getFirstName() {
-    return firstName;
-  }
+    @Override
+    public String toString() {
+        return "User{" +
+                "userUid=" + userUid +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                '}';
+    }
 
-  public String getLastName() {
-    return lastName;
-  }
-
-  public Gender getGender() {
-    return gender;
-  }
-
-  public Integer getAge() {
-    return age;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public String getFullName() {
-    return firstName + " " + lastName;
-  }
-
-  public int getDateOfBirth() {
-    return LocalDate.now().minusYears(age).getYear();
-  }
-
-  public static User newUser(UUID userUid, User user) {
-    return new User(userUid, user.getFirstName(), user.getLastName(), user.gender,
-        user.getAge(), user.getEmail());
-  }
-
-  @Override
-  public String toString() {
-    return "User{" +
-        "userUid=" + userUid +
-        ", firstName='" + firstName + '\'' +
-        ", lastName='" + lastName + '\'' +
-        ", gender=" + gender +
-        ", age=" + age +
-        ", email='" + email + '\'' +
-        '}';
-  }
-
-  public enum Gender {
-    MALE,
-    FEMALE
-  }
+    public enum Gender {
+        MALE,
+        FEMALE
+    }
 
 }
